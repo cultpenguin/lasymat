@@ -1,0 +1,22 @@
+lasYmat - READING LAS FILES FROM MATLAB
+(c) 2002-2003, Thomas Mejer Hansen and Christian Rau Schioett
+-------------------------------------------------------------
+
+Jan-29-2003 : First release
+This is beta software. Thins may change before a stable release.
+Right now ReadLas will read some LAS 2.0/3.0 file.
+the output of LAS=ReadLas('lasFILE.las')
+is a structure (LAS) containing the different elemts of the LAS file
+as levels in the STRUCTURE.
+e.g. :
+
+>> LAS
+LAS =
+
+    VERSION: [1x1 struct]
+    WELL: [1x1 struct]
+    CURVE: [1x1 struct]
+    ASCII: [1x1 struct]
+
+The actual log data can be found in LAS.ASCII.DATA2
+
