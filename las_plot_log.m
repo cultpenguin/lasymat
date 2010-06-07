@@ -2,6 +2,9 @@
 %
 % A very very simple plot of a LAS file....
 %
+% CALL: 
+%  las_plot_log(LAS,show_curves,ymin,ymax);
+%
 function las_plot_log(LAS,show_curves,ymin,ymax);
 
 if nargin==0
@@ -23,7 +26,8 @@ if (ncurves>nc_max)&(nargin==1)
         c1=(i-1)*nc_max+1;
         c2=min([ncurves i*nc_max]);
         c2_alt=i*nc_max;
-        las_plot_log(LAS,[c1:c2_alt])
+        %las_plot_log(LAS,[c1:c2_alt],1600,1850);
+        las_plot_log(LAS,[c1:c2_alt]);
         txt=sprintf('%s_c%02d-c%02d',LAS.WELL.WELL.VALUE,c1,c2);
         watermark(txt);
         print_mul(txt);
@@ -58,6 +62,9 @@ end
 
 
 n_show=length(show_curves);
+
+FS=8;
+if n_show>7, FS=6;end
 j=0;
 for i=show_curves,
     j=j+1;
@@ -76,13 +83,20 @@ for i=show_curves,
         tit=sprintf('%s (%s)',iCURVE.DESCRIPTION,UNIT);
         grid on
         xl=xlabel(tit,'interpreter','none'); % TITLE NO TEX
-        set(xl,'Rotation',-10,'FontSize',6);
-        title(LOGTYPES{i});
+        set(xl,'Rotation',-10,'FontSize',FS);
+        title(LOGTYPES{i},'interpreter','none');
         if j==1;
             ylabel(sprintf('(%s)',LAS.WELL.STRT.UNIT))
         end
         set(gca,'ydir','reverse');
         set(gca,'ylim',ylim);
+        
+        xlim=get(gca,'xlim');
+        if (xlim(1)==0), xlim(1)=-.1;end
+        if (xlim(2)==1), xlim(2)=1.1;end
+        set(gca,'xlim',xlim);
+        
+        
     catch
         axis off
         % COULD NOT PLOT LOG
