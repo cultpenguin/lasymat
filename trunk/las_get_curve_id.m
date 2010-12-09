@@ -2,6 +2,12 @@ function CURVE_id=las_get_curve_id(LAS,CURVE_txt);
 
 CURVE_id=[];
 
+if nargin==1,
+    disp(fieldnames(LAS.CURVE));
+    return;
+end
+
+
 if ~isfield(LAS.CURVE,CURVE_txt)
     return
 end
