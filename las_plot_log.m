@@ -5,7 +5,7 @@
 % CALL: 
 %  las_plot_log(LAS,show_curves,ymin,ymax);
 %
-function las_plot_log(LAS,show_curves,ymin,ymax);
+function las_plot_log(LAS,show_curves,ymin,ymax,print_to_pdf);
 
 if nargin==0
     D=dir('*.las');
@@ -16,6 +16,10 @@ if nargin==0
         las_plot_log(LAS);
     end
     return
+end
+
+if nargin<5
+    print_to_pdf=0;
 end
 
 ncurves=size(LAS.DATA,2);
@@ -49,6 +53,7 @@ if nargin<3, ymin=y(1); end
 if nargin<4, ymax=max(y); end
 iy=find((y>=ymin)&(y<=ymax));
 ylim=[min(y(iy)) max(y(iy))];
+ylim=[ymin ymax];
 
 if (nargin<2)|(isempty(show_curves))
     show_curves=1:1:ncurves;
@@ -109,3 +114,9 @@ catch
     s=suptitle(sprintf('%s',LAS.WELL.WELL.VALUE));
 end
 set(s,'interpreter','none');
+
+if print_to_pdf==1,
+    [p,f]=fileparts(LAS.file);;
+    print_mul(sprintf('%s',f))
+end 
+
