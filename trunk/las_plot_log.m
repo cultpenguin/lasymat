@@ -33,8 +33,7 @@ if (ncurves>nc_max)&(nargin==1)
         %las_plot_log(LAS,[c1:c2_alt],1600,1850);
         las_plot_log(LAS,[c1:c2_alt]);
         txt=sprintf('%s_c%02d-c%02d',LAS.WELL.WELL.VALUE,c1,c2);
-        watermark(txt);
-        print_mul(txt);
+        print('-dpdf',txt);
     end
     return
 end
